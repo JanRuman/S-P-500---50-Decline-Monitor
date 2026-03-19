@@ -6,9 +6,11 @@ import os
 import pandas as pd
 import requests
 
-WIKIPEDIA_SP500_URL   = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-WIKIPEDIA_NDX_URL     = "https://en.wikipedia.org/wiki/Nasdaq-100"
-FALLBACK_CSV          = os.path.join("cache", "tickers.csv")
+import config
+
+WIKIPEDIA_SP500_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+WIKIPEDIA_NDX_URL   = "https://en.wikipedia.org/wiki/Nasdaq-100"
+FALLBACK_CSV        = os.path.join("cache", "tickers.csv")
 
 HEADERS = {
     "User-Agent": (
@@ -41,13 +43,11 @@ def _get_sp500() -> pd.DataFrame:
 
 def _get_nasdaq100() -> pd.DataFrame:
     html = _fetch_html(WIKIPEDIA_NDX_URL)
-    # Try table with id="constituents" first, then fall back to index
     try:
         tables = pd.read_html(io.StringIO(html), attrs={"id": "constituents"})
         df = tables[0]
     except Exception:
         tables = pd.read_html(io.StringIO(html))
-        # Find the table that has a ticker-like column
         df = None
         for t in tables:
             cols_lower = [str(c).lower() for c in t.columns]
@@ -57,7 +57,6 @@ def _get_nasdaq100() -> pd.DataFrame:
         if df is None:
             raise RuntimeError("Could not find NASDAQ-100 table on Wikipedia.")
 
-    # Normalise column names
     col_map = {}
     for col in df.columns:
         cl = str(col).lower()
@@ -82,8 +81,19 @@ def _get_nasdaq100() -> pd.DataFrame:
     return df
 
 
+def _get_extra() -> pd.DataFrame:
+    """Return the manually configured extra tickers from config.EXTRA_TICKERS."""
+    if not getattr(config, "EXTRA_TICKERS", None):
+        return pd.DataFrame(columns=["ticker", "name", "sector", "exchange"])
+    df = pd.DataFrame(config.EXTRA_TICKERS)
+    for col in ["ticker", "name", "sector", "exchange"]:
+        if col not in df.columns:
+            df[col] = "Unknown"
+    return df[["ticker", "name", "sector", "exchange"]]
+
+
 def get_tickers() -> pd.DataFrame:
-    """Return combined S&P 500 + NASDAQ-100 DataFrame.
+    """Return combined S&P 500 + NASDAQ-100 + Extra DataFrame.
 
     Columns: ticker, name, sector, exchange.
     Falls back to cached CSV if Wikipedia is unreachable.
@@ -93,30 +103,28 @@ def get_tickers() -> pd.DataFrame:
 
     try:
         sp500_df = _get_sp500()
-        print(f"  S&P 500: {len(sp500_df)} tickers from Wikipedia.")
+        print(f"  S&P 500:    {len(sp500_df)} tickers from Wikipedia.")
     except Exception as e:
-        errors.append(f"S&P 500 fetch failed: {e}")
-        print(f"  WARNING: {errors[-1]}")
+        errors.append(f"S&P 500: {e}")
+        print(f"  WARNING: S&P 500 fetch failed ({e})")
 
     try:
         nasdaq_df = _get_nasdaq100()
         print(f"  NASDAQ-100: {len(nasdaq_df)} tickers from Wikipedia.")
     except Exception as e:
-        errors.append(f"NASDAQ-100 fetch failed: {e}")
-        print(f"  WARNING: {errors[-1]}")
+        errors.append(f"NASDAQ-100: {e}")
+        print(f"  WARNING: NASDAQ-100 fetch failed ({e})")
 
-    parts = [df for df in [sp500_df, nasdaq_df] if df is not None]
+    extra_df = _get_extra()
+    if not extra_df.empty:
+        print(f"  Extra:      {len(extra_df)} tickers from config.")
+
+    parts = [df for df in [sp500_df, nasdaq_df, extra_df] if df is not None and not df.empty]
 
     if parts:
         combined = pd.concat(parts, ignore_index=True)
-        # Keep first occurrence when a ticker appears in both indexes
+        # Keep first occurrence when a ticker appears in multiple indexes
         combined = combined.drop_duplicates(subset="ticker", keep="first")
-        # Update exchange label for cross-listed stocks
-        combined.loc[
-            combined["ticker"].isin(sp500_df["ticker"] if sp500_df is not None else []) &
-            combined["ticker"].isin(nasdaq_df["ticker"] if nasdaq_df is not None else []),
-            "exchange"
-        ] = "S&P 500 & NASDAQ-100"
         os.makedirs("cache", exist_ok=True)
         combined.to_csv(FALLBACK_CSV, index=False)
         print(f"  Total unique tickers: {len(combined)}")
@@ -137,6 +145,6 @@ def get_tickers() -> pd.DataFrame:
     )
 
 
-# Keep old name as alias for backward compatibility
+# Backward-compatibility alias
 def get_sp500_tickers() -> pd.DataFrame:
     return get_tickers()
