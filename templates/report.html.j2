@@ -160,7 +160,7 @@
 <p class="meta">
   Generated: <strong>{{ generated_at }}</strong> &nbsp;|&nbsp;
   Universe: <strong>S&amp;P 500 · NASDAQ-100 · EURO STOXX 50 · DAX · Custom</strong> &nbsp;|&nbsp;
-  Showing stocks down ≥<strong id="metaThreshold">50</strong>% with mkt cap ≥$<strong id="metaCap">1</strong>B &nbsp;|&nbsp;
+  Showing stocks down ≥<strong id="metaThreshold">20</strong>% with mkt cap ≥$<strong id="metaCap">1</strong>B &nbsp;|&nbsp;
   Matches: <strong id="metaCount">…</strong>
 </p>
 
@@ -173,7 +173,7 @@
 
   <div class="control-group">
     <label>Min % Decline</label>
-    <input type="number" id="thresholdFilter" value="50" min="0" max="99" step="5" oninput="applyFilters()">
+    <input type="number" id="thresholdFilter" value="20" min="0" max="99" step="5" oninput="applyFilters()">
   </div>
 
   <div class="control-group">
@@ -348,7 +348,7 @@
 
   function resetFilters() {
     document.getElementById('filterInput').value   = '';
-    document.getElementById('thresholdFilter').value = '50';
+    document.getElementById('thresholdFilter').value = '20';
     document.getElementById('capFilter').value     = '1';
     document.getElementById('sectorFilter').value  = '';
     document.getElementById('exchangeFilter').value = '';

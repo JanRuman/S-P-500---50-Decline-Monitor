@@ -158,15 +158,73 @@ def _get_eurostoxx50() -> pd.DataFrame:
     return df[["ticker", "name", "sector", "exchange"]]
 
 
+_DAX40_FALLBACK = [
+    ("ADS.DE",  "Adidas",                    "Consumer Discretionary"),
+    ("AIR.DE",  "Airbus",                    "Industrials"),
+    ("ALV.DE",  "Allianz",                   "Financials"),
+    ("BAS.DE",  "BASF",                      "Materials"),
+    ("BAYN.DE", "Bayer",                     "Health Care"),
+    ("BEI.DE",  "Beiersdorf",                "Consumer Staples"),
+    ("BMW.DE",  "BMW",                       "Consumer Discretionary"),
+    ("BNR.DE",  "Brenntag",                  "Materials"),
+    ("CBK.DE",  "Commerzbank",               "Financials"),
+    ("CON.DE",  "Continental",               "Consumer Discretionary"),
+    ("1COV.DE", "Covestro",                  "Materials"),
+    ("DB1.DE",  "Deutsche Börse",            "Financials"),
+    ("DBK.DE",  "Deutsche Bank",             "Financials"),
+    ("DHL.DE",  "DHL Group",                 "Industrials"),
+    ("DTG.DE",  "Daimler Truck",             "Industrials"),
+    ("DTE.DE",  "Deutsche Telekom",          "Communication Services"),
+    ("EOAN.DE", "E.ON",                      "Utilities"),
+    ("ENR.DE",  "Siemens Energy",            "Energy"),
+    ("FME.DE",  "Fresenius Medical Care",    "Health Care"),
+    ("FRE.DE",  "Fresenius",                 "Health Care"),
+    ("HEI.DE",  "Heidelberg Materials",      "Materials"),
+    ("HEN3.DE", "Henkel",                    "Consumer Staples"),
+    ("IFX.DE",  "Infineon Technologies",     "Information Technology"),
+    ("MBG.DE",  "Mercedes-Benz",             "Consumer Discretionary"),
+    ("MRK.DE",  "Merck KGaA",               "Health Care"),
+    ("MTX.DE",  "MTU Aero Engines",          "Industrials"),
+    ("MUV2.DE", "Munich Re",                 "Financials"),
+    ("P911.DE", "Porsche AG",               "Consumer Discretionary"),
+    ("PAH3.DE", "Porsche SE",               "Consumer Discretionary"),
+    ("QIA.DE",  "Qiagen",                   "Health Care"),
+    ("RHM.DE",  "Rheinmetall",              "Industrials"),
+    ("RWE.DE",  "RWE",                      "Utilities"),
+    ("SAP.DE",  "SAP",                      "Information Technology"),
+    ("SHL.DE",  "Siemens Healthineers",     "Health Care"),
+    ("SIE.DE",  "Siemens",                  "Industrials"),
+    ("SRT3.DE", "Sartorius",                "Health Care"),
+    ("SY1.DE",  "Symrise",                  "Materials"),
+    ("VNA.DE",  "Vonovia",                  "Real Estate"),
+    ("VOW3.DE", "Volkswagen",               "Consumer Discretionary"),
+    ("ZAL.DE",  "Zalando",                  "Consumer Discretionary"),
+]
+
+
 def _get_dax() -> pd.DataFrame:
-    """Fetch DAX 40 and append .DE Yahoo Finance suffix."""
-    html = _fetch_html(WIKIPEDIA_DAX_URL)
-    df = _find_table(html, table_id="constituents")
-    df = _normalise(df, "DAX")
-    # All DAX stocks trade on Frankfurt (XETRA) → .DE suffix
-    df["ticker"] = df["ticker"].apply(
-        lambda t: t if ("." in t) else t + ".DE"
-    )
+    """Fetch DAX 40; try Wikipedia first, fall back to hardcoded list."""
+    try:
+        html = _fetch_html(WIKIPEDIA_DAX_URL)
+        # Try all tables on page — pick the one with a ticker/symbol column and ≥35 rows
+        all_tables = pd.read_html(io.StringIO(html))
+        for t in all_tables:
+            cols_lower = [str(c).lower() for c in t.columns]
+            has_ticker = any("ticker" in c or "symbol" in c for c in cols_lower)
+            if has_ticker and len(t) >= 35:
+                df = _normalise(t, "DAX")
+                df["ticker"] = df["ticker"].apply(
+                    lambda t: t if "." in t else t + ".DE"
+                )
+                print("  DAX: fetched from Wikipedia.")
+                return df
+    except Exception as e:
+        print(f"  DAX Wikipedia fetch failed ({e}), using hardcoded list.")
+
+    # Hardcoded fallback — reliable list of DAX 40 components
+    print("  DAX: using hardcoded fallback list.")
+    df = pd.DataFrame(_DAX40_FALLBACK, columns=["ticker", "name", "sector"])
+    df["exchange"] = "DAX"
     return df
 
 
