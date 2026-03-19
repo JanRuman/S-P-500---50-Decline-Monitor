@@ -158,7 +158,7 @@
 
 <h1>Global Stock Decline Monitor — Stocks Down from All-Time High</h1>
 <p class="meta">
-  Generated: <strong>2026-03-19 13:21 UTC</strong> &nbsp;|&nbsp;
+  Generated: <strong>2026-03-19 13:37 UTC</strong> &nbsp;|&nbsp;
   Universe: <strong>S&amp;P 500 · NASDAQ-100 · EURO STOXX 50 · DAX · Custom</strong> &nbsp;|&nbsp;
   Showing stocks down ≥<strong id="metaThreshold">20</strong>% with mkt cap ≥$<strong id="metaCap">1</strong>B &nbsp;|&nbsp;
   Matches: <strong id="metaCount">…</strong>
@@ -186,23 +186,43 @@
     <select id="sectorFilter" onchange="applyFilters()">
       <option value="">All Sectors</option>
       
+      <option value="Aerospace &amp; Defence">Aerospace &amp; Defence</option>
+      
+      <option value="Automotive">Automotive</option>
+      
+      <option value="Biotech">Biotech</option>
+      
       <option value="Biotechnology">Biotechnology</option>
       
       <option value="Catalog/Specialty Distribution">Catalog/Specialty Distribution</option>
+      
+      <option value="Chemicals">Chemicals</option>
       
       <option value="Communication Services">Communication Services</option>
       
       <option value="Computer Software">Computer Software</option>
       
+      <option value="Construction Materials">Construction Materials</option>
+      
       <option value="Consumer">Consumer</option>
       
       <option value="Consumer Discretionary">Consumer Discretionary</option>
       
+      <option value="Consumer Goods">Consumer Goods</option>
+      
       <option value="Consumer Staples">Consumer Staples</option>
+      
+      <option value="Consumer goods">Consumer goods</option>
+      
+      <option value="Distribution">Distribution</option>
+      
+      <option value="E-Commerce">E-Commerce</option>
       
       <option value="EDP Services">EDP Services</option>
       
       <option value="Energy">Energy</option>
+      
+      <option value="Financial Services">Financial Services</option>
       
       <option value="Financials">Financials</option>
       
@@ -215,6 +235,10 @@
       <option value="Information Technology">Information Technology</option>
       
       <option value="Materials">Materials</option>
+      
+      <option value="Medical Equipment">Medical Equipment</option>
+      
+      <option value="Pharmaceuticals">Pharmaceuticals</option>
       
       <option value="Real Estate">Real Estate</option>
       
@@ -256,7 +280,7 @@
   <button class="btn-reset" onclick="resetFilters()">↺ Reset</button>
 </div>
 
-<p class="summary-bar" id="visibleCount">Showing 295 stocks</p>
+<p class="summary-bar" id="visibleCount">Showing 313 stocks</p>
 
 <!-- ── Table ── -->
 <div class="table-wrap">
@@ -343,6 +367,23 @@
           <td>2021-08-09</td>
           <td><span class="pct severe">-89.2%</span></td>
           <td>$20.7B</td>
+        </tr>
+        
+        <tr class="severe"
+            data-sector="Financial Services"
+            data-exchange="DAX"
+            data-severity="severe"
+            data-decline="88.5"
+            data-cap="34.88">
+          <td><span class="ticker">CBK.DE</span></td>
+          <td>Commerzbank</td>
+          <td>Financial Services</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$30.94</td>
+          <td>$268.69</td>
+          <td>2000-03-22</td>
+          <td><span class="pct severe">-88.5%</span></td>
+          <td>$34.9B</td>
         </tr>
         
         <tr class="severe"
@@ -465,6 +506,23 @@
         </tr>
         
         <tr class="severe"
+            data-sector="E-Commerce"
+            data-exchange="DAX"
+            data-severity="severe"
+            data-decline="78.5"
+            data-cap="5.81">
+          <td><span class="ticker">ZAL.DE</span></td>
+          <td>Zalando</td>
+          <td>E-Commerce</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$22.49</td>
+          <td>$104.65</td>
+          <td>2021-07-07</td>
+          <td><span class="pct severe">-78.5%</span></td>
+          <td>$5.8B</td>
+        </tr>
+        
+        <tr class="severe"
             data-sector="Health Care"
             data-exchange="S&amp;P 500"
             data-severity="severe"
@@ -567,23 +625,6 @@
         </tr>
         
         <tr class="significant"
-            data-sector="Communication Services"
-            data-exchange="S&amp;P 500"
-            data-severity="significant"
-            data-decline="74.5"
-            data-cap="26.47">
-          <td><span class="ticker">CHTR</span></td>
-          <td>Charter Communications</td>
-          <td>Communication Services</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$209.00</td>
-          <td>$821.01</td>
-          <td>2021-09-02</td>
-          <td><span class="pct significant">-74.5%</span></td>
-          <td>$26.5B</td>
-        </tr>
-        
-        <tr class="significant"
             data-sector="Information Technology"
             data-exchange="S&amp;P 500"
             data-severity="significant"
@@ -598,6 +639,23 @@
           <td>2024-03-13</td>
           <td><span class="pct significant">-74.5%</span></td>
           <td>$18.2B</td>
+        </tr>
+        
+        <tr class="significant"
+            data-sector="Communication Services"
+            data-exchange="S&amp;P 500"
+            data-severity="significant"
+            data-decline="74.5"
+            data-cap="26.47">
+          <td><span class="ticker">CHTR</span></td>
+          <td>Charter Communications</td>
+          <td>Communication Services</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$209.00</td>
+          <td>$821.01</td>
+          <td>2021-09-02</td>
+          <td><span class="pct significant">-74.5%</span></td>
+          <td>$26.5B</td>
         </tr>
         
         <tr class="significant"
@@ -853,6 +911,23 @@
           <td>2021-11-05</td>
           <td><span class="pct significant">-67.6%</span></td>
           <td>$79.2B</td>
+        </tr>
+        
+        <tr class="significant"
+            data-sector="Automotive"
+            data-exchange="DAX"
+            data-severity="significant"
+            data-decline="67.3"
+            data-cap="11.72">
+          <td><span class="ticker">CON.DE</span></td>
+          <td>Continental</td>
+          <td>Automotive</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$58.58</td>
+          <td>$179.01</td>
+          <td>2018-01-09</td>
+          <td><span class="pct significant">-67.3%</span></td>
+          <td>$11.7B</td>
         </tr>
         
         <tr class="significant"
@@ -1196,6 +1271,23 @@
         </tr>
         
         <tr class="significant"
+            data-sector="Automotive"
+            data-exchange="DAX"
+            data-severity="significant"
+            data-decline="61.4"
+            data-cap="9.66">
+          <td><span class="ticker">PAH3.DE</span></td>
+          <td>Porsche SE</td>
+          <td>Automotive</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$31.53</td>
+          <td>$81.79</td>
+          <td>2021-06-07</td>
+          <td><span class="pct significant">-61.4%</span></td>
+          <td>$9.7B</td>
+        </tr>
+        
+        <tr class="significant"
             data-sector="Consumer Discretionary"
             data-exchange="S&amp;P 500"
             data-severity="significant"
@@ -1366,23 +1458,6 @@
         </tr>
         
         <tr class="significant"
-            data-sector="Health Care"
-            data-exchange="S&amp;P 500"
-            data-severity="significant"
-            data-decline="57.3"
-            data-cap="9.63">
-          <td><span class="ticker">RVTY</span></td>
-          <td>Revvity</td>
-          <td>Health Care</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$84.93</td>
-          <td>$199.03</td>
-          <td>2021-12-31</td>
-          <td><span class="pct significant">-57.3%</span></td>
-          <td>$9.6B</td>
-        </tr>
-        
-        <tr class="significant"
             data-sector="Financials"
             data-exchange="S&amp;P 500"
             data-severity="significant"
@@ -1397,6 +1472,23 @@
           <td>2024-11-14</td>
           <td><span class="pct significant">-57.3%</span></td>
           <td>$7.8B</td>
+        </tr>
+        
+        <tr class="significant"
+            data-sector="Health Care"
+            data-exchange="S&amp;P 500"
+            data-severity="significant"
+            data-decline="57.3"
+            data-cap="9.63">
+          <td><span class="ticker">RVTY</span></td>
+          <td>Revvity</td>
+          <td>Health Care</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$84.93</td>
+          <td>$199.03</td>
+          <td>2021-12-31</td>
+          <td><span class="pct significant">-57.3%</span></td>
+          <td>$9.6B</td>
         </tr>
         
         <tr class="significant"
@@ -1536,23 +1628,6 @@
         </tr>
         
         <tr class="significant"
-            data-sector="Information Technology"
-            data-exchange="S&amp;P 500"
-            data-severity="significant"
-            data-decline="53.1"
-            data-cap="15.31">
-          <td><span class="ticker">CDW</span></td>
-          <td>CDW Corporation</td>
-          <td>Information Technology</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$117.59</td>
-          <td>$250.54</td>
-          <td>2024-03-27</td>
-          <td><span class="pct significant">-53.1%</span></td>
-          <td>$15.3B</td>
-        </tr>
-        
-        <tr class="significant"
             data-sector="Consumer Discretionary"
             data-exchange="S&amp;P 500"
             data-severity="significant"
@@ -1570,20 +1645,20 @@
         </tr>
         
         <tr class="significant"
-            data-sector="Health Care"
+            data-sector="Information Technology"
             data-exchange="S&amp;P 500"
             data-severity="significant"
-            data-decline="52.9"
-            data-cap="258.08">
-          <td><span class="ticker">UNH</span></td>
-          <td>UnitedHealth Group</td>
-          <td>Health Care</td>
+            data-decline="53.1"
+            data-cap="15.31">
+          <td><span class="ticker">CDW</span></td>
+          <td>CDW Corporation</td>
+          <td>Information Technology</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$284.33</td>
-          <td>$603.20</td>
-          <td>2024-11-11</td>
-          <td><span class="pct significant">-52.9%</span></td>
-          <td>$258.1B</td>
+          <td>$117.59</td>
+          <td>$250.54</td>
+          <td>2024-03-27</td>
+          <td><span class="pct significant">-53.1%</span></td>
+          <td>$15.3B</td>
         </tr>
         
         <tr class="significant"
@@ -1601,6 +1676,23 @@
           <td>2022-04-21</td>
           <td><span class="pct significant">-52.9%</span></td>
           <td>$12.5B</td>
+        </tr>
+        
+        <tr class="significant"
+            data-sector="Health Care"
+            data-exchange="S&amp;P 500"
+            data-severity="significant"
+            data-decline="52.9"
+            data-cap="258.08">
+          <td><span class="ticker">UNH</span></td>
+          <td>UnitedHealth Group</td>
+          <td>Health Care</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$284.33</td>
+          <td>$603.20</td>
+          <td>2024-11-11</td>
+          <td><span class="pct significant">-52.9%</span></td>
+          <td>$258.1B</td>
         </tr>
         
         <tr class="significant"
@@ -1638,23 +1730,6 @@
         </tr>
         
         <tr class="significant"
-            data-sector="Financials"
-            data-exchange="S&amp;P 500"
-            data-severity="significant"
-            data-decline="51.9"
-            data-cap="19.1">
-          <td><span class="ticker">TROW</span></td>
-          <td>T. Rowe Price</td>
-          <td>Financials</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$87.51</td>
-          <td>$182.04</td>
-          <td>2021-08-31</td>
-          <td><span class="pct significant">-51.9%</span></td>
-          <td>$19.1B</td>
-        </tr>
-        
-        <tr class="significant"
             data-sector="Consumer Staples"
             data-exchange="S&amp;P 500"
             data-severity="significant"
@@ -1669,6 +1744,23 @@
           <td>2016-10-14</td>
           <td><span class="pct significant">-51.9%</span></td>
           <td>$8.3B</td>
+        </tr>
+        
+        <tr class="significant"
+            data-sector="Financials"
+            data-exchange="S&amp;P 500"
+            data-severity="significant"
+            data-decline="51.9"
+            data-cap="19.1">
+          <td><span class="ticker">TROW</span></td>
+          <td>T. Rowe Price</td>
+          <td>Financials</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$87.51</td>
+          <td>$182.04</td>
+          <td>2021-08-31</td>
+          <td><span class="pct significant">-51.9%</span></td>
+          <td>$19.1B</td>
         </tr>
         
         <tr class="significant"
@@ -1737,6 +1829,23 @@
           <td>2025-10-09</td>
           <td><span class="pct significant">-50.9%</span></td>
           <td>$67.4B</td>
+        </tr>
+        
+        <tr class="significant"
+            data-sector="Pharmaceuticals"
+            data-exchange="DAX"
+            data-severity="significant"
+            data-decline="50.9"
+            data-cap="46.28">
+          <td><span class="ticker">MRK.DE</span></td>
+          <td>Merck</td>
+          <td>Pharmaceuticals</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$106.45</td>
+          <td>$216.68</td>
+          <td>2021-12-28</td>
+          <td><span class="pct significant">-50.9%</span></td>
+          <td>$46.3B</td>
         </tr>
         
         <tr class="significant"
@@ -1858,6 +1967,40 @@
           <td>$143.0B</td>
         </tr>
         
+        <tr class="significant"
+            data-sector="Healthcare"
+            data-exchange="DAX"
+            data-severity="significant"
+            data-decline="50.3"
+            data-cap="11.27">
+          <td><span class="ticker">FME.DE</span></td>
+          <td>Fresenius Medical Care</td>
+          <td>Healthcare</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$38.88</td>
+          <td>$78.31</td>
+          <td>2018-01-31</td>
+          <td><span class="pct significant">-50.3%</span></td>
+          <td>$11.3B</td>
+        </tr>
+        
+        <tr class="significant"
+            data-sector="Consumer goods"
+            data-exchange="DAX"
+            data-severity="significant"
+            data-decline="50.1"
+            data-cap="15.93">
+          <td><span class="ticker">BEI.DE</span></td>
+          <td>Beiersdorf</td>
+          <td>Consumer goods</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$72.92</td>
+          <td>$146.01</td>
+          <td>2024-05-10</td>
+          <td><span class="pct significant">-50.1%</span></td>
+          <td>$15.9B</td>
+        </tr>
+        
         <tr class="moderate"
             data-sector="Real Estate"
             data-exchange="S&amp;P 500"
@@ -1876,23 +2019,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Communication Services"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="49.6"
-            data-cap="176.31">
-          <td><span class="ticker">DIS</span></td>
-          <td>Walt Disney Company (The)</td>
-          <td>Communication Services</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$99.42</td>
-          <td>$197.26</td>
-          <td>2021-03-08</td>
-          <td><span class="pct moderate">-49.6%</span></td>
-          <td>$176.3B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Real Estate"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -1907,6 +2033,23 @@
           <td>2021-12-31</td>
           <td><span class="pct moderate">-49.6%</span></td>
           <td>$19.3B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Communication Services"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="49.6"
+            data-cap="176.31">
+          <td><span class="ticker">DIS</span></td>
+          <td>Walt Disney Company (The)</td>
+          <td>Communication Services</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$99.42</td>
+          <td>$197.26</td>
+          <td>2021-03-08</td>
+          <td><span class="pct moderate">-49.6%</span></td>
+          <td>$176.3B</td>
         </tr>
         
         <tr class="moderate"
@@ -2165,6 +2308,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Automotive"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="45.6"
+            data-cap="43.27">
+          <td><span class="ticker">VOW3.DE</span></td>
+          <td>Volkswagen Group</td>
+          <td>Automotive</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$86.32</td>
+          <td>$158.73</td>
+          <td>2021-04-06</td>
+          <td><span class="pct moderate">-45.6%</span></td>
+          <td>$43.3B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Financials"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -2179,6 +2339,40 @@
           <td>2025-01-31</td>
           <td><span class="pct moderate">-45.3%</span></td>
           <td>$83.9B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="E-Commerce"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="45.2"
+            data-cap="4.73">
+          <td><span class="ticker">G24.DE</span></td>
+          <td>Scout24</td>
+          <td>E-Commerce</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$66.95</td>
+          <td>$122.10</td>
+          <td>2025-07-24</td>
+          <td><span class="pct moderate">-45.2%</span></td>
+          <td>$4.7B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Real Estate"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="45.0"
+            data-cap="18.79">
+          <td><span class="ticker">VNA.DE</span></td>
+          <td>Vonovia</td>
+          <td>Real Estate</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$22.15</td>
+          <td>$40.24</td>
+          <td>2020-09-02</td>
+          <td><span class="pct moderate">-45.0%</span></td>
+          <td>$18.8B</td>
         </tr>
         
         <tr class="moderate"
@@ -2200,23 +2394,6 @@
         
         <tr class="moderate"
             data-sector="Information Technology"
-            data-exchange="EURO STOXX 50"
-            data-severity="moderate"
-            data-decline="44.5"
-            data-cap="48.04">
-          <td><span class="ticker">IFX.DE</span></td>
-          <td>Infineon Technologies</td>
-          <td>Information Technology</td>
-          <td><span class="exch-tag">EURO STOXX 50</span></td>
-          <td>$36.90</td>
-          <td>$66.51</td>
-          <td>2000-06-27</td>
-          <td><span class="pct moderate">-44.5%</span></td>
-          <td>$48.0B</td>
-        </tr>
-        
-        <tr class="moderate"
-            data-sector="Information Technology"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
             data-decline="44.5"
@@ -2233,20 +2410,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Health Care"
-            data-exchange="S&amp;P 500"
+            data-sector="Information Technology"
+            data-exchange="EURO STOXX 50"
             data-severity="moderate"
-            data-decline="44.3"
-            data-cap="155.35">
-          <td><span class="ticker">PFE</span></td>
-          <td>Pfizer</td>
-          <td>Health Care</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$27.32</td>
-          <td>$49.05</td>
-          <td>2021-12-16</td>
-          <td><span class="pct moderate">-44.3%</span></td>
-          <td>$155.3B</td>
+            data-decline="44.5"
+            data-cap="48.04">
+          <td><span class="ticker">IFX.DE</span></td>
+          <td>Infineon Technologies</td>
+          <td>Information Technology</td>
+          <td><span class="exch-tag">EURO STOXX 50</span></td>
+          <td>$36.90</td>
+          <td>$66.51</td>
+          <td>2000-06-27</td>
+          <td><span class="pct moderate">-44.5%</span></td>
+          <td>$48.0B</td>
         </tr>
         
         <tr class="moderate"
@@ -2267,6 +2444,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Health Care"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="44.3"
+            data-cap="155.35">
+          <td><span class="ticker">PFE</span></td>
+          <td>Pfizer</td>
+          <td>Health Care</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$27.32</td>
+          <td>$49.05</td>
+          <td>2021-12-16</td>
+          <td><span class="pct moderate">-44.3%</span></td>
+          <td>$155.3B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Information Technology"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -2281,6 +2475,23 @@
           <td>2023-08-01</td>
           <td><span class="pct moderate">-44.1%</span></td>
           <td>$24.3B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Chemicals"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="43.6"
+            data-cap="9.92">
+          <td><span class="ticker">SY1.DE</span></td>
+          <td>Symrise</td>
+          <td>Chemicals</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$71.00</td>
+          <td>$125.98</td>
+          <td>2021-11-22</td>
+          <td><span class="pct moderate">-43.6%</span></td>
+          <td>$9.9B</td>
         </tr>
         
         <tr class="moderate"
@@ -2420,6 +2631,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Biotech"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="41.1"
+            data-cap="7.29">
+          <td><span class="ticker">QIA.DE</span></td>
+          <td>Qiagen</td>
+          <td>Biotech</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$35.24</td>
+          <td>$59.78</td>
+          <td>2000-07-18</td>
+          <td><span class="pct moderate">-41.1%</span></td>
+          <td>$7.3B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Consumer Discretionary"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -2519,6 +2747,23 @@
           <td>2024-06-18</td>
           <td><span class="pct moderate">-40.3%</span></td>
           <td>$139.3B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Distribution"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="39.7"
+            data-cap="6.99">
+          <td><span class="ticker">BNR.DE</span></td>
+          <td>Brenntag</td>
+          <td>Distribution</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$48.41</td>
+          <td>$80.23</td>
+          <td>2024-03-01</td>
+          <td><span class="pct moderate">-39.7%</span></td>
+          <td>$7.0B</td>
         </tr>
         
         <tr class="moderate"
@@ -2624,6 +2869,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Medical Equipment"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="39.3"
+            data-cap="41.49">
+          <td><span class="ticker">SHL.DE</span></td>
+          <td>Siemens Healthineers</td>
+          <td>Medical Equipment</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$37.15</td>
+          <td>$61.22</td>
+          <td>2021-12-09</td>
+          <td><span class="pct moderate">-39.3%</span></td>
+          <td>$41.5B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Financials"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -2641,23 +2903,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Materials"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="39.1"
-            data-cap="22.55">
-          <td><span class="ticker">PPG</span></td>
-          <td>PPG Industries</td>
-          <td>Materials</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$100.78</td>
-          <td>$165.44</td>
-          <td>2021-06-04</td>
-          <td><span class="pct moderate">-39.1%</span></td>
-          <td>$22.6B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Consumer Discretionary"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -2672,6 +2917,23 @@
           <td>2026-01-22</td>
           <td><span class="pct moderate">-39.1%</span></td>
           <td>$63.8B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Materials"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="39.1"
+            data-cap="22.55">
+          <td><span class="ticker">PPG</span></td>
+          <td>PPG Industries</td>
+          <td>Materials</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$100.78</td>
+          <td>$165.44</td>
+          <td>2021-06-04</td>
+          <td><span class="pct moderate">-39.1%</span></td>
+          <td>$22.6B</td>
         </tr>
         
         <tr class="moderate"
@@ -2811,6 +3073,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Consumer Goods"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="37.1"
+            data-cap="27.27">
+          <td><span class="ticker">HEN3.DE</span></td>
+          <td>Henkel</td>
+          <td>Consumer Goods</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$67.00</td>
+          <td>$106.58</td>
+          <td>2017-06-19</td>
+          <td><span class="pct moderate">-37.1%</span></td>
+          <td>$27.3B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Real Estate"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -2913,23 +3192,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Industrials"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="35.9"
-            data-cap="28.49">
-          <td><span class="ticker">VRSK</span></td>
-          <td>Verisk Analytics</td>
-          <td>Industrials</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$204.39</td>
-          <td>$318.85</td>
-          <td>2025-06-04</td>
-          <td><span class="pct moderate">-35.9%</span></td>
-          <td>$28.5B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Biotechnology"
             data-exchange="NASDAQ-100"
             data-severity="moderate"
@@ -2944,6 +3206,23 @@
           <td>2025-10-20</td>
           <td><span class="pct moderate">-35.9%</span></td>
           <td>$41.8B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Industrials"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="35.9"
+            data-cap="28.49">
+          <td><span class="ticker">VRSK</span></td>
+          <td>Verisk Analytics</td>
+          <td>Industrials</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$204.39</td>
+          <td>$318.85</td>
+          <td>2025-06-04</td>
+          <td><span class="pct moderate">-35.9%</span></td>
+          <td>$28.5B</td>
         </tr>
         
         <tr class="moderate"
@@ -3049,6 +3328,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Health Care"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="34.7"
+            data-cap="16.21">
+          <td><span class="ticker">PODD</span></td>
+          <td>Insulet Corporation</td>
+          <td>Health Care</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$230.28</td>
+          <td>$352.82</td>
+          <td>2025-09-09</td>
+          <td><span class="pct moderate">-34.7%</span></td>
+          <td>$16.2B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Consumer Discretionary"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -3083,37 +3379,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Health Care"
-            data-exchange="S&amp;P 500"
+            data-sector="Healthcare"
+            data-exchange="DAX"
             data-severity="moderate"
-            data-decline="34.7"
-            data-cap="16.21">
-          <td><span class="ticker">PODD</span></td>
-          <td>Insulet Corporation</td>
-          <td>Health Care</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$230.28</td>
-          <td>$352.82</td>
-          <td>2025-09-09</td>
-          <td><span class="pct moderate">-34.7%</span></td>
-          <td>$16.2B</td>
-        </tr>
-        
-        <tr class="moderate"
-            data-sector="Consumer Discretionary"
-            data-exchange="EURO STOXX 50"
-            data-severity="moderate"
-            data-decline="34.3"
-            data-cap="88.3">
-          <td><span class="ticker">PRX.AS</span></td>
-          <td>Prosus</td>
-          <td>Consumer Discretionary</td>
-          <td><span class="exch-tag">EURO STOXX 50</span></td>
-          <td>$40.86</td>
-          <td>$62.19</td>
-          <td>2025-10-08</td>
-          <td><span class="pct moderate">-34.3%</span></td>
-          <td>$88.3B</td>
+            data-decline="34.6"
+            data-cap="25.11">
+          <td><span class="ticker">FRE.DE</span></td>
+          <td>Fresenius</td>
+          <td>Healthcare</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$44.58</td>
+          <td>$68.21</td>
+          <td>2017-06-19</td>
+          <td><span class="pct moderate">-34.6%</span></td>
+          <td>$25.1B</td>
         </tr>
         
         <tr class="moderate"
@@ -3131,6 +3410,23 @@
           <td>2025-11-10</td>
           <td><span class="pct moderate">-34.3%</span></td>
           <td>$46.5B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Consumer Discretionary"
+            data-exchange="EURO STOXX 50"
+            data-severity="moderate"
+            data-decline="34.3"
+            data-cap="88.3">
+          <td><span class="ticker">PRX.AS</span></td>
+          <td>Prosus</td>
+          <td>Consumer Discretionary</td>
+          <td><span class="exch-tag">EURO STOXX 50</span></td>
+          <td>$40.86</td>
+          <td>$62.19</td>
+          <td>2025-10-08</td>
+          <td><span class="pct moderate">-34.3%</span></td>
+          <td>$88.3B</td>
         </tr>
         
         <tr class="moderate"
@@ -3169,23 +3465,6 @@
         
         <tr class="moderate"
             data-sector="Industrials"
-            data-exchange="EURO STOXX 50"
-            data-severity="moderate"
-            data-decline="33.6"
-            data-cap="33.91">
-          <td><span class="ticker">SGO.PA</span></td>
-          <td>Saint-Gobain</td>
-          <td>Industrials</td>
-          <td><span class="exch-tag">EURO STOXX 50</span></td>
-          <td>$68.76</td>
-          <td>$103.60</td>
-          <td>2025-03-06</td>
-          <td><span class="pct moderate">-33.6%</span></td>
-          <td>$33.9B</td>
-        </tr>
-        
-        <tr class="moderate"
-            data-sector="Industrials"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
             data-decline="33.6"
@@ -3199,6 +3478,23 @@
           <td>2025-08-06</td>
           <td><span class="pct moderate">-33.6%</span></td>
           <td>$20.4B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Industrials"
+            data-exchange="EURO STOXX 50"
+            data-severity="moderate"
+            data-decline="33.6"
+            data-cap="33.91">
+          <td><span class="ticker">SGO.PA</span></td>
+          <td>Saint-Gobain</td>
+          <td>Industrials</td>
+          <td><span class="exch-tag">EURO STOXX 50</span></td>
+          <td>$68.76</td>
+          <td>$103.60</td>
+          <td>2025-03-06</td>
+          <td><span class="pct moderate">-33.6%</span></td>
+          <td>$33.9B</td>
         </tr>
         
         <tr class="moderate"
@@ -3423,6 +3719,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Materials"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="30.7"
+            data-cap="18.41">
+          <td><span class="ticker">AMCR</span></td>
+          <td>Amcor</td>
+          <td>Materials</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$39.85</td>
+          <td>$57.51</td>
+          <td>2022-06-06</td>
+          <td><span class="pct moderate">-30.7%</span></td>
+          <td>$18.4B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Information Technology"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -3440,20 +3753,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Materials"
-            data-exchange="S&amp;P 500"
+            data-sector="Construction Materials"
+            data-exchange="DAX"
             data-severity="moderate"
-            data-decline="30.7"
-            data-cap="18.41">
-          <td><span class="ticker">AMCR</span></td>
-          <td>Amcor</td>
-          <td>Materials</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$39.85</td>
-          <td>$57.51</td>
-          <td>2022-06-06</td>
-          <td><span class="pct moderate">-30.7%</span></td>
-          <td>$18.4B</td>
+            data-decline="30.6"
+            data-cap="29.18">
+          <td><span class="ticker">HEI.DE</span></td>
+          <td>Heidelberg Materials</td>
+          <td>Construction Materials</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$165.80</td>
+          <td>$239.00</td>
+          <td>2026-01-27</td>
+          <td><span class="pct moderate">-30.6%</span></td>
+          <td>$29.2B</td>
         </tr>
         
         <tr class="moderate"
@@ -3491,23 +3804,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Consumer Staples"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="30.0"
-            data-cap="32.77">
-          <td><span class="ticker">KMB</span></td>
-          <td>Kimberly-Clark</td>
-          <td>Consumer Staples</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$98.72</td>
-          <td>$141.12</td>
-          <td>2025-03-10</td>
-          <td><span class="pct moderate">-30.0%</span></td>
-          <td>$32.8B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Health Care"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -3525,20 +3821,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Financials"
+            data-sector="Consumer Staples"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
-            data-decline="29.9"
-            data-cap="112.03">
-          <td><span class="ticker">COF</span></td>
-          <td>Capital One</td>
-          <td>Financials</td>
+            data-decline="30.0"
+            data-cap="32.77">
+          <td><span class="ticker">KMB</span></td>
+          <td>Kimberly-Clark</td>
+          <td>Consumer Staples</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$180.14</td>
-          <td>$256.96</td>
-          <td>2026-01-06</td>
-          <td><span class="pct moderate">-29.9%</span></td>
-          <td>$112.0B</td>
+          <td>$98.72</td>
+          <td>$141.12</td>
+          <td>2025-03-10</td>
+          <td><span class="pct moderate">-30.0%</span></td>
+          <td>$32.8B</td>
         </tr>
         
         <tr class="moderate"
@@ -3556,6 +3852,23 @@
           <td>2023-01-06</td>
           <td><span class="pct moderate">-29.9%</span></td>
           <td>$10.8B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Financials"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="29.9"
+            data-cap="112.03">
+          <td><span class="ticker">COF</span></td>
+          <td>Capital One</td>
+          <td>Financials</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$180.14</td>
+          <td>$256.96</td>
+          <td>2026-01-06</td>
+          <td><span class="pct moderate">-29.9%</span></td>
+          <td>$112.0B</td>
         </tr>
         
         <tr class="moderate"
@@ -3678,23 +3991,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Industrials"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="28.9"
-            data-cap="48.15">
-          <td><span class="ticker">CARR</span></td>
-          <td>Carrier Global</td>
-          <td>Industrials</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$57.61</td>
-          <td>$81.01</td>
-          <td>2024-10-14</td>
-          <td><span class="pct moderate">-28.9%</span></td>
-          <td>$48.1B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Consumer Staples"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -3709,6 +4005,23 @@
           <td>2023-05-15</td>
           <td><span class="pct moderate">-28.9%</span></td>
           <td>$33.6B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Industrials"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="28.9"
+            data-cap="48.15">
+          <td><span class="ticker">CARR</span></td>
+          <td>Carrier Global</td>
+          <td>Industrials</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$57.61</td>
+          <td>$81.01</td>
+          <td>2024-10-14</td>
+          <td><span class="pct moderate">-28.9%</span></td>
+          <td>$48.1B</td>
         </tr>
         
         <tr class="moderate"
@@ -3818,23 +4131,6 @@
             data-exchange="S&amp;P 500"
             data-severity="moderate"
             data-decline="27.4"
-            data-cap="52.68">
-          <td><span class="ticker">ADSK</span></td>
-          <td>Autodesk</td>
-          <td>Information Technology</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$248.48</td>
-          <td>$342.27</td>
-          <td>2021-08-25</td>
-          <td><span class="pct moderate">-27.4%</span></td>
-          <td>$52.7B</td>
-        </tr>
-        
-        <tr class="moderate"
-            data-sector="Information Technology"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="27.4"
             data-cap="2911.93">
           <td><span class="ticker">MSFT</span></td>
           <td>Microsoft</td>
@@ -3845,6 +4141,23 @@
           <td>2025-10-28</td>
           <td><span class="pct moderate">-27.4%</span></td>
           <td>$2911.9B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Information Technology"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="27.4"
+            data-cap="52.68">
+          <td><span class="ticker">ADSK</span></td>
+          <td>Autodesk</td>
+          <td>Information Technology</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$248.48</td>
+          <td>$342.27</td>
+          <td>2021-08-25</td>
+          <td><span class="pct moderate">-27.4%</span></td>
+          <td>$52.7B</td>
         </tr>
         
         <tr class="moderate"
@@ -3933,23 +4246,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Information Technology"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="26.3"
-            data-cap="365.38">
-          <td><span class="ticker">PLTR</span></td>
-          <td>Palantir Technologies</td>
-          <td>Information Technology</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$152.77</td>
-          <td>$207.18</td>
-          <td>2025-11-03</td>
-          <td><span class="pct moderate">-26.3%</span></td>
-          <td>$365.4B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Consumer Discretionary"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -3964,6 +4260,23 @@
           <td>2026-02-17</td>
           <td><span class="pct moderate">-26.3%</span></td>
           <td>$23.4B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Information Technology"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="26.3"
+            data-cap="365.38">
+          <td><span class="ticker">PLTR</span></td>
+          <td>Palantir Technologies</td>
+          <td>Information Technology</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$152.77</td>
+          <td>$207.18</td>
+          <td>2025-11-03</td>
+          <td><span class="pct moderate">-26.3%</span></td>
+          <td>$365.4B</td>
         </tr>
         
         <tr class="moderate"
@@ -4018,6 +4331,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Consumer Staples"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="25.8"
+            data-cap="36.78">
+          <td><span class="ticker">KDP</span></td>
+          <td>Keurig Dr Pepper</td>
+          <td>Consumer Staples</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$27.07</td>
+          <td>$36.47</td>
+          <td>2022-08-16</td>
+          <td><span class="pct moderate">-25.8%</span></td>
+          <td>$36.8B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Industrials"
             data-exchange="EURO STOXX 50"
             data-severity="moderate"
@@ -4052,20 +4382,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Consumer Staples"
+            data-sector="Health Care"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
-            data-decline="25.8"
-            data-cap="36.78">
-          <td><span class="ticker">KDP</span></td>
-          <td>Keurig Dr Pepper</td>
-          <td>Consumer Staples</td>
+            data-decline="25.7"
+            data-cap="70.68">
+          <td><span class="ticker">CI</span></td>
+          <td>Cigna</td>
+          <td>Health Care</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$27.07</td>
-          <td>$36.47</td>
-          <td>2022-08-16</td>
-          <td><span class="pct moderate">-25.8%</span></td>
-          <td>$36.8B</td>
+          <td>$264.61</td>
+          <td>$356.00</td>
+          <td>2024-09-16</td>
+          <td><span class="pct moderate">-25.7%</span></td>
+          <td>$70.7B</td>
         </tr>
         
         <tr class="moderate"
@@ -4086,20 +4416,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Health Care"
-            data-exchange="S&amp;P 500"
+            data-sector="Consumer Discretionary"
+            data-exchange="EURO STOXX 50"
             data-severity="moderate"
-            data-decline="25.7"
-            data-cap="70.68">
-          <td><span class="ticker">CI</span></td>
-          <td>Cigna</td>
-          <td>Health Care</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$264.61</td>
-          <td>$356.00</td>
-          <td>2024-09-16</td>
-          <td><span class="pct moderate">-25.7%</span></td>
-          <td>$70.7B</td>
+            data-decline="25.5"
+            data-cap="46.53">
+          <td><span class="ticker">BMW.DE</span></td>
+          <td>BMW</td>
+          <td>Consumer Discretionary</td>
+          <td><span class="exch-tag">EURO STOXX 50</span></td>
+          <td>$76.34</td>
+          <td>$102.53</td>
+          <td>2024-04-08</td>
+          <td><span class="pct moderate">-25.5%</span></td>
+          <td>$46.5B</td>
         </tr>
         
         <tr class="moderate"
@@ -4117,23 +4447,6 @@
           <td>2025-08-28</td>
           <td><span class="pct moderate">-25.5%</span></td>
           <td>$73.5B</td>
-        </tr>
-        
-        <tr class="moderate"
-            data-sector="Consumer Discretionary"
-            data-exchange="EURO STOXX 50"
-            data-severity="moderate"
-            data-decline="25.5"
-            data-cap="46.53">
-          <td><span class="ticker">BMW.DE</span></td>
-          <td>BMW</td>
-          <td>Consumer Discretionary</td>
-          <td><span class="exch-tag">EURO STOXX 50</span></td>
-          <td>$76.34</td>
-          <td>$102.53</td>
-          <td>2024-04-08</td>
-          <td><span class="pct moderate">-25.5%</span></td>
-          <td>$46.5B</td>
         </tr>
         
         <tr class="moderate"
@@ -4239,23 +4552,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Consumer Discretionary"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="24.2"
-            data-cap="141.23">
-          <td><span class="ticker">BKNG</span></td>
-          <td>Booking Holdings</td>
-          <td>Consumer Discretionary</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$4381.39</td>
-          <td>$5781.65</td>
-          <td>2025-07-07</td>
-          <td><span class="pct moderate">-24.2%</span></td>
-          <td>$141.2B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Health Care"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -4270,6 +4566,23 @@
           <td>2022-02-08</td>
           <td><span class="pct moderate">-24.2%</span></td>
           <td>$92.9B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Consumer Discretionary"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="24.2"
+            data-cap="141.23">
+          <td><span class="ticker">BKNG</span></td>
+          <td>Booking Holdings</td>
+          <td>Consumer Discretionary</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$4381.39</td>
+          <td>$5781.65</td>
+          <td>2025-07-07</td>
+          <td><span class="pct moderate">-24.2%</span></td>
+          <td>$141.2B</td>
         </tr>
         
         <tr class="moderate"
@@ -4290,23 +4603,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Communication Services"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="23.9"
-            data-cap="24.52">
-          <td><span class="ticker">FOXA</span></td>
-          <td>Fox Corporation (Class A)</td>
-          <td>Communication Services</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$57.65</td>
-          <td>$75.74</td>
-          <td>2026-01-06</td>
-          <td><span class="pct moderate">-23.9%</span></td>
-          <td>$24.5B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Financials"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -4321,6 +4617,23 @@
           <td>2025-08-14</td>
           <td><span class="pct moderate">-23.9%</span></td>
           <td>$129.2B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Communication Services"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="23.9"
+            data-cap="24.52">
+          <td><span class="ticker">FOXA</span></td>
+          <td>Fox Corporation (Class A)</td>
+          <td>Communication Services</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$57.65</td>
+          <td>$75.74</td>
+          <td>2026-01-06</td>
+          <td><span class="pct moderate">-23.9%</span></td>
+          <td>$24.5B</td>
         </tr>
         
         <tr class="moderate"
@@ -4613,20 +4926,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Communication Services"
+            data-sector="Health Care"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
             data-decline="22.1"
-            data-cap="37.82">
-          <td><span class="ticker">TTWO</span></td>
-          <td>Take-Two Interactive</td>
-          <td>Communication Services</td>
+            data-cap="33.26">
+          <td><span class="ticker">RMD</span></td>
+          <td>ResMed</td>
+          <td>Health Care</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$204.22</td>
-          <td>$262.29</td>
-          <td>2025-10-20</td>
+          <td>$227.88</td>
+          <td>$292.36</td>
+          <td>2025-08-22</td>
           <td><span class="pct moderate">-22.1%</span></td>
-          <td>$37.8B</td>
+          <td>$33.3B</td>
         </tr>
         
         <tr class="moderate"
@@ -4647,37 +4960,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Health Care"
+            data-sector="Communication Services"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
             data-decline="22.1"
-            data-cap="33.26">
-          <td><span class="ticker">RMD</span></td>
-          <td>ResMed</td>
-          <td>Health Care</td>
+            data-cap="37.82">
+          <td><span class="ticker">TTWO</span></td>
+          <td>Take-Two Interactive</td>
+          <td>Communication Services</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$227.88</td>
-          <td>$292.36</td>
-          <td>2025-08-22</td>
+          <td>$204.22</td>
+          <td>$262.29</td>
+          <td>2025-10-20</td>
           <td><span class="pct moderate">-22.1%</span></td>
-          <td>$33.3B</td>
-        </tr>
-        
-        <tr class="moderate"
-            data-sector="Real Estate"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="22.0"
-            data-cap="39.85">
-          <td><span class="ticker">CBRE</span></td>
-          <td>CBRE Group</td>
-          <td>Real Estate</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$133.91</td>
-          <td>$171.61</td>
-          <td>2026-01-29</td>
-          <td><span class="pct moderate">-22.0%</span></td>
-          <td>$39.9B</td>
+          <td>$37.8B</td>
         </tr>
         
         <tr class="moderate"
@@ -4715,6 +5011,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Real Estate"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="22.0"
+            data-cap="39.85">
+          <td><span class="ticker">CBRE</span></td>
+          <td>CBRE Group</td>
+          <td>Real Estate</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$133.91</td>
+          <td>$171.61</td>
+          <td>2026-01-29</td>
+          <td><span class="pct moderate">-22.0%</span></td>
+          <td>$39.9B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Industrials"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -4729,23 +5042,6 @@
           <td>2024-11-25</td>
           <td><span class="pct moderate">-22.0%</span></td>
           <td>$32.4B</td>
-        </tr>
-        
-        <tr class="moderate"
-            data-sector="Communication Services"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="21.9"
-            data-cap="1557.4">
-          <td><span class="ticker">META</span></td>
-          <td>Meta Platforms</td>
-          <td>Communication Services</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$615.68</td>
-          <td>$788.15</td>
-          <td>2025-08-12</td>
-          <td><span class="pct moderate">-21.9%</span></td>
-          <td>$1557.4B</td>
         </tr>
         
         <tr class="moderate"
@@ -4766,20 +5062,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Utilities"
+            data-sector="Communication Services"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
-            data-decline="21.8"
-            data-cap="57.64">
-          <td><span class="ticker">VST</span></td>
-          <td>Vistra Corp.</td>
-          <td>Utilities</td>
+            data-decline="21.9"
+            data-cap="1557.4">
+          <td><span class="ticker">META</span></td>
+          <td>Meta Platforms</td>
+          <td>Communication Services</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$170.12</td>
-          <td>$217.62</td>
-          <td>2025-09-22</td>
-          <td><span class="pct moderate">-21.8%</span></td>
-          <td>$57.6B</td>
+          <td>$615.68</td>
+          <td>$788.15</td>
+          <td>2025-08-12</td>
+          <td><span class="pct moderate">-21.9%</span></td>
+          <td>$1557.4B</td>
         </tr>
         
         <tr class="moderate"
@@ -4834,6 +5130,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Utilities"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="21.8"
+            data-cap="57.64">
+          <td><span class="ticker">VST</span></td>
+          <td>Vistra Corp.</td>
+          <td>Utilities</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$170.12</td>
+          <td>$217.62</td>
+          <td>2025-09-22</td>
+          <td><span class="pct moderate">-21.8%</span></td>
+          <td>$57.6B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Health Care"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -4885,23 +5198,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Utilities"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="21.3"
-            data-cap="114.83">
-          <td><span class="ticker">CEG</span></td>
-          <td>Constellation Energy</td>
-          <td>Utilities</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$317.22</td>
-          <td>$402.95</td>
-          <td>2025-10-15</td>
-          <td><span class="pct moderate">-21.3%</span></td>
-          <td>$114.8B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Industrials"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -4919,20 +5215,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Health Care"
+            data-sector="Utilities"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
-            data-decline="21.2"
-            data-cap="188.52">
-          <td><span class="ticker">ABT</span></td>
-          <td>Abbott Laboratories</td>
-          <td>Health Care</td>
+            data-decline="21.3"
+            data-cap="114.83">
+          <td><span class="ticker">CEG</span></td>
+          <td>Constellation Energy</td>
+          <td>Utilities</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$108.49</td>
-          <td>$137.64</td>
-          <td>2025-03-03</td>
-          <td><span class="pct moderate">-21.2%</span></td>
-          <td>$188.5B</td>
+          <td>$317.22</td>
+          <td>$402.95</td>
+          <td>2025-10-15</td>
+          <td><span class="pct moderate">-21.3%</span></td>
+          <td>$114.8B</td>
         </tr>
         
         <tr class="moderate"
@@ -4950,6 +5246,23 @@
           <td>2025-07-28</td>
           <td><span class="pct moderate">-21.2%</span></td>
           <td>$22.1B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Health Care"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="21.2"
+            data-cap="188.52">
+          <td><span class="ticker">ABT</span></td>
+          <td>Abbott Laboratories</td>
+          <td>Health Care</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$108.49</td>
+          <td>$137.64</td>
+          <td>2025-03-03</td>
+          <td><span class="pct moderate">-21.2%</span></td>
+          <td>$188.5B</td>
         </tr>
         
         <tr class="moderate"
@@ -5038,23 +5351,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Consumer Discretionary"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="20.8"
-            data-cap="329.44">
-          <td><span class="ticker">HD</span></td>
-          <td>Home Depot (The)</td>
-          <td>Consumer Discretionary</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$330.93</td>
-          <td>$418.08</td>
-          <td>2024-12-06</td>
-          <td><span class="pct moderate">-20.8%</span></td>
-          <td>$329.4B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Real Estate"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -5106,6 +5402,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Consumer Discretionary"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="20.8"
+            data-cap="329.44">
+          <td><span class="ticker">HD</span></td>
+          <td>Home Depot (The)</td>
+          <td>Consumer Discretionary</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$330.93</td>
+          <td>$418.08</td>
+          <td>2024-12-06</td>
+          <td><span class="pct moderate">-20.8%</span></td>
+          <td>$329.4B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Utilities"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -5140,6 +5453,23 @@
         </tr>
         
         <tr class="moderate"
+            data-sector="Aerospace &amp; Defence"
+            data-exchange="DAX"
+            data-severity="moderate"
+            data-decline="20.6"
+            data-cap="17.19">
+          <td><span class="ticker">MTX.DE</span></td>
+          <td>MTU Aero Engines</td>
+          <td>Aerospace &amp; Defence</td>
+          <td><span class="exch-tag">DAX</span></td>
+          <td>$319.30</td>
+          <td>$402.00</td>
+          <td>2026-02-20</td>
+          <td><span class="pct moderate">-20.6%</span></td>
+          <td>$17.2B</td>
+        </tr>
+        
+        <tr class="moderate"
             data-sector="Financials"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
@@ -5157,20 +5487,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Health Care"
+            data-sector="Consumer Discretionary"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
             data-decline="20.5"
-            data-cap="8.61">
-          <td><span class="ticker">HSIC</span></td>
-          <td>Henry Schein</td>
-          <td>Health Care</td>
+            data-cap="22.52">
+          <td><span class="ticker">PHM</span></td>
+          <td>PulteGroup</td>
+          <td>Consumer Discretionary</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$73.12</td>
-          <td>$91.96</td>
-          <td>2022-04-13</td>
+          <td>$117.08</td>
+          <td>$147.27</td>
+          <td>2024-10-18</td>
           <td><span class="pct moderate">-20.5%</span></td>
-          <td>$8.6B</td>
+          <td>$22.5B</td>
         </tr>
         
         <tr class="moderate"
@@ -5191,20 +5521,20 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Consumer Discretionary"
+            data-sector="Health Care"
             data-exchange="S&amp;P 500"
             data-severity="moderate"
             data-decline="20.5"
-            data-cap="22.52">
-          <td><span class="ticker">PHM</span></td>
-          <td>PulteGroup</td>
-          <td>Consumer Discretionary</td>
+            data-cap="8.61">
+          <td><span class="ticker">HSIC</span></td>
+          <td>Henry Schein</td>
+          <td>Health Care</td>
           <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$117.08</td>
-          <td>$147.27</td>
-          <td>2024-10-18</td>
+          <td>$73.12</td>
+          <td>$91.96</td>
+          <td>2022-04-13</td>
           <td><span class="pct moderate">-20.5%</span></td>
-          <td>$22.5B</td>
+          <td>$8.6B</td>
         </tr>
         
         <tr class="moderate"
@@ -5259,23 +5589,6 @@
         </tr>
         
         <tr class="moderate"
-            data-sector="Consumer Discretionary"
-            data-exchange="S&amp;P 500"
-            data-severity="moderate"
-            data-decline="20.2"
-            data-cap="29.41">
-          <td><span class="ticker">EXPE</span></td>
-          <td>Expedia Group</td>
-          <td>Consumer Discretionary</td>
-          <td><span class="exch-tag">S&amp;P 500</span></td>
-          <td>$240.04</td>
-          <td>$300.66</td>
-          <td>2026-01-08</td>
-          <td><span class="pct moderate">-20.2%</span></td>
-          <td>$29.4B</td>
-        </tr>
-        
-        <tr class="moderate"
             data-sector="Industrials"
             data-exchange="EURO STOXX 50"
             data-severity="moderate"
@@ -5290,6 +5603,23 @@
           <td>2021-09-16</td>
           <td><span class="pct moderate">-20.2%</span></td>
           <td>$50.8B</td>
+        </tr>
+        
+        <tr class="moderate"
+            data-sector="Consumer Discretionary"
+            data-exchange="S&amp;P 500"
+            data-severity="moderate"
+            data-decline="20.2"
+            data-cap="29.41">
+          <td><span class="ticker">EXPE</span></td>
+          <td>Expedia Group</td>
+          <td>Consumer Discretionary</td>
+          <td><span class="exch-tag">S&amp;P 500</span></td>
+          <td>$240.04</td>
+          <td>$300.66</td>
+          <td>2026-01-08</td>
+          <td><span class="pct moderate">-20.2%</span></td>
+          <td>$29.4B</td>
         </tr>
         
       
