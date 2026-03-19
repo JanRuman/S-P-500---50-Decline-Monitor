@@ -2,16 +2,243 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>S&P 500 Decline Monitor — Initializing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S&amp;P 500 Decline Monitor</title>
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 80px 20px; background: #f4f6f9; color: #333; }
-    h1 { font-size: 1.4rem; }
-    p { color: #666; }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6f9;
+      color: #1a1a2e;
+      margin: 0;
+      padding: 24px 16px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 4px;
+    }
+
+    .meta {
+      color: #555;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .controls input, .controls select {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+
+    .controls input { min-width: 220px; }
+
+    .summary-bar {
+      font-size: 0.85rem;
+      color: #444;
+      margin-bottom: 8px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 0.88rem;
+    }
+
+    thead th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 11px 14px;
+      text-align: left;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    thead th:hover { background: #2d2d52; }
+
+    tbody tr { border-bottom: 1px solid #eee; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(0,0,0,0.03) !important; }
+
+    tbody td {
+      padding: 9px 14px;
+      white-space: nowrap;
+    }
+
+    /* Severity colour coding */
+    tr.severe   { background: #fff0f0; }
+    tr.significant { background: #fff7ed; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .badge.severe      { background: #fee2e2; color: #b91c1c; }
+    .badge.significant { background: #ffedd5; color: #c2410c; }
+
+    .pct { font-weight: 700; }
+    .pct.severe      { color: #b91c1c; }
+    .pct.significant { color: #c2410c; }
+
+    .ticker { font-weight: 700; font-family: monospace; font-size: 0.92rem; }
+
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #888;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.2rem; }
+    }
   </style>
 </head>
 <body>
-  <h1>S&amp;P 500 Decline Monitor</h1>
-  <p>The report has not been generated yet.</p>
-  <p>Run the GitHub Actions workflow (<strong>Daily S&amp;P 500 Decline Report</strong>) manually to generate the first report.</p>
+
+<h1>S&amp;P 500 — Stocks Down 50%+ from All-Time High</h1>
+<p class="meta">
+  Generated: <strong>2026-03-19 08:54 UTC</strong> &nbsp;|&nbsp;
+  Threshold: <strong>50%</strong> &nbsp;|&nbsp;
+  Min market cap: <strong>$2B</strong> &nbsp;|&nbsp;
+  Matches: <strong>0</strong>
+</p>
+
+<div class="controls">
+  <input type="text" id="filterInput" placeholder="Search ticker or company…" oninput="applyFilters()">
+  <select id="sectorFilter" onchange="applyFilters()">
+    <option value="">All Sectors</option>
+    
+  </select>
+  <select id="severityFilter" onchange="applyFilters()">
+    <option value="">All Severity</option>
+    <option value="severe">Severe (≥75%)</option>
+    <option value="significant">Significant (≥50%)</option>
+  </select>
+</div>
+
+<p class="summary-bar" id="visibleCount">Showing 0 stocks</p>
+
+<div class="table-wrap">
+  <table id="stockTable">
+    <thead>
+      <tr>
+        <th data-col="0" data-type="str">Ticker</th>
+        <th data-col="1" data-type="str">Company</th>
+        <th data-col="2" data-type="str">Sector</th>
+        <th data-col="3" data-type="num">Current Price</th>
+        <th data-col="4" data-type="num">ATH Price</th>
+        <th data-col="5" data-type="str">ATH Date</th>
+        <th data-col="6" data-type="num">% Decline ▼</th>
+        <th data-col="7" data-type="num">Mkt Cap ($B)</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      
+        <tr>
+          <td colspan="8" class="no-results">
+            No stocks currently meet the criteria (down 50%+ from ATH with market cap ≥$2B).
+          </td>
+        </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // --- Sorting ---
+  let sortCol = 6;        // default: % Decline column
+  let sortAsc = false;    // default: descending (worst first)
+
+  document.querySelectorAll('#stockTable thead th').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = parseInt(th.dataset.col);
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        sortAsc = th.dataset.type === 'str';  // strings default asc, numbers default desc
+      }
+      sortTable();
+      updateHeaderArrows();
+    });
+  });
+
+  function sortTable() {
+    const tbody = document.getElementById('tableBody');
+    const rows = Array.from(tbody.querySelectorAll('tr[data-sector]'));
+    const th = document.querySelector(`#stockTable thead th[data-col="${sortCol}"]`);
+    const isNum = th && th.dataset.type === 'num';
+
+    rows.sort((a, b) => {
+      let aVal = a.cells[sortCol].textContent.trim();
+      let bVal = b.cells[sortCol].textContent.trim();
+      if (isNum) {
+        aVal = parseFloat(aVal.replace(/[^0-9.\-]/g, '')) || 0;
+        bVal = parseFloat(bVal.replace(/[^0-9.\-]/g, '')) || 0;
+        return sortAsc ? aVal - bVal : bVal - aVal;
+      }
+      return sortAsc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+    });
+    rows.forEach(r => tbody.appendChild(r));
+  }
+
+  function updateHeaderArrows() {
+    document.querySelectorAll('#stockTable thead th').forEach(th => {
+      // Strip any existing arrow
+      th.textContent = th.textContent.replace(/ [▲▼]$/, '');
+      if (parseInt(th.dataset.col) === sortCol) {
+        th.textContent += sortAsc ? ' ▲' : ' ▼';
+      }
+    });
+  }
+
+  // --- Filtering ---
+  function applyFilters() {
+    const text = document.getElementById('filterInput').value.toLowerCase();
+    const sector = document.getElementById('sectorFilter').value;
+    const severity = document.getElementById('severityFilter').value;
+    let visible = 0;
+
+    document.querySelectorAll('#tableBody tr[data-sector]').forEach(row => {
+      const matchText = !text ||
+        row.cells[0].textContent.toLowerCase().includes(text) ||
+        row.cells[1].textContent.toLowerCase().includes(text);
+      const matchSector = !sector || row.dataset.sector === sector;
+      const matchSeverity = !severity || row.dataset.severity === severity;
+      const show = matchText && matchSector && matchSeverity;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    document.getElementById('visibleCount').textContent = `Showing ${visible} stocks`;
+  }
+
+  // Initialize arrows
+  updateHeaderArrows();
+</script>
+
 </body>
 </html>
