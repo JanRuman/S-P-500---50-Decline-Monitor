@@ -206,18 +206,38 @@ def _get_dax() -> pd.DataFrame:
     """Fetch DAX 40; try Wikipedia first, fall back to hardcoded list."""
     try:
         html = _fetch_html(WIKIPEDIA_DAX_URL)
-        # Try all tables on page — pick the one with a ticker/symbol column and ≥35 rows
         all_tables = pd.read_html(io.StringIO(html))
         for t in all_tables:
             cols_lower = [str(c).lower() for c in t.columns]
             has_ticker = any("ticker" in c or "symbol" in c for c in cols_lower)
             if has_ticker and len(t) >= 35:
-                df = _normalise(t, "DAX")
-                df["ticker"] = df["ticker"].apply(
-                    lambda t: t if "." in t else t + ".DE"
+                # Map columns manually — do NOT use _normalise because it replaces
+                # dots with hyphens, corrupting exchange suffixes like .DE → -DE
+                col_map = {}
+                for col in t.columns:
+                    cl = str(col).lower()
+                    if ("ticker" in cl or "symbol" in cl) and "ticker" not in col_map.values():
+                        col_map[col] = "ticker"
+                    elif ("company" in cl or "name" in cl) and "name" not in col_map.values():
+                        col_map[col] = "name"
+                    elif "sector" in cl and "sector" not in col_map.values():
+                        col_map[col] = "sector"
+                t = t.rename(columns=col_map)
+                if "ticker" not in t.columns:
+                    continue
+                if "name"   not in t.columns:
+                    t["name"]   = t["ticker"]
+                if "sector" not in t.columns:
+                    t["sector"] = "Unknown"
+                t = t[["ticker", "name", "sector"]].copy()
+                t["ticker"] = t["ticker"].astype(str).str.strip()
+                # Add .DE only if no exchange suffix already present
+                t["ticker"] = t["ticker"].apply(
+                    lambda x: x if "." in x else x + ".DE"
                 )
+                t["exchange"] = "DAX"
                 print("  DAX: fetched from Wikipedia.")
-                return df
+                return t
     except Exception as e:
         print(f"  DAX Wikipedia fetch failed ({e}), using hardcoded list.")
 
