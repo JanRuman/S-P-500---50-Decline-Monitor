@@ -7,13 +7,11 @@ CACHE_DIR              = "cache"
 DOCS_DIR               = "docs"
 TEMPLATE_PATH          = "templates/report.html.j2"
 
-# Extra tickers to monitor beyond S&P 500 + NASDAQ-100
-# These can be any Yahoo Finance ticker (US or international ADRs etc.)
+# Custom tickers to monitor in addition to the main indexes.
+# Use any valid Yahoo Finance ticker symbol.
+# European stocks need exchange suffix: .DE (Germany), .PA (France), .AS (Netherlands) etc.
 EXTRA_TICKERS = [
-    # International stocks (as traded on US exchanges or Yahoo Finance)
-    {"ticker": "NVO",  "name": "Novo Nordisk A/S",       "sector": "Healthcare",  "exchange": "Extra"},
-    {"ticker": "ASML", "name": "ASML Holding N.V.",       "sector": "Technology",  "exchange": "Extra"},
-    {"ticker": "TSM",  "name": "Taiwan Semiconductor",    "sector": "Technology",  "exchange": "Extra"},
-    {"ticker": "BABA", "name": "Alibaba Group",           "sector": "Consumer",    "exchange": "Extra"},
-    {"ticker": "SAP",  "name": "SAP SE",                  "sector": "Technology",  "exchange": "Extra"},
+    {"ticker": "NVO",   "name": "Novo Nordisk A/S",    "sector": "Healthcare", "exchange": "Custom"},
+    {"ticker": "TSM",   "name": "Taiwan Semiconductor", "sector": "Technology", "exchange": "Custom"},
+    {"ticker": "BABA",  "name": "Alibaba Group",        "sector": "Consumer",   "exchange": "Custom"},
 ]
