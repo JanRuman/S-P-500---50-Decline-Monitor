@@ -1,0 +1,11 @@
+import requests, pandas as pd, io, os
+
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0"}
+r = requests.get("https://en.wikipedia.org/wiki/List_of_S%26P_500_companies", headers=HEADERS)
+df = pd.read_html(io.StringIO(r.text), attrs={"id": "constituents"})[0]
+df = df.rename(columns={"Symbol":"ticker","Security":"name","GICS Sector":"sector"})
+df = df[["ticker","name","sector"]]
+df["ticker"] = df["ticker"].str.replace(".", "-", regex=False)
+os.makedirs("cache", exist_ok=True)
+df.to_csv("cache/sp500_tickers.csv", index=False)
+print(f"Saved {len(df)} tickers")
