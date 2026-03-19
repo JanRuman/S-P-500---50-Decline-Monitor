@@ -21,9 +21,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: cache/
-          key: stock-cache-${{ runner.os }}-${{ hashFiles('src/fetch_prices.py') }}
+          key: stock-cache-v2-${{ runner.os }}-${{ hashFiles('src/fetch_prices.py') }}
           restore-keys: |
-            stock-cache-${{ runner.os }}-
+            stock-cache-v2-${{ runner.os }}-
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -42,7 +42,7 @@ jobs:
         if: always()   # Save even if a batch partially failed
         with:
           path: cache/
-          key: stock-cache-${{ runner.os }}-${{ hashFiles('src/fetch_prices.py') }}
+          key: stock-cache-v2-${{ runner.os }}-${{ hashFiles('src/fetch_prices.py') }}
 
       - name: Commit and push updated report
         run: |
