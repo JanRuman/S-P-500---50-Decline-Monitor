@@ -1,10 +1,20 @@
 """Fetch the S&P 500 constituent list from Wikipedia."""
 
+import io
 import os
+
 import pandas as pd
+import requests
 
 WIKIPEDIA_URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
 FALLBACK_CSV = os.path.join("cache", "sp500_tickers.csv")
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (compatible; sp500-monitor/1.0; "
+        "+https://github.com/JanRuman/S-P-500---50-Decline-Monitor)"
+    )
+}
 
 
 def get_sp500_tickers() -> pd.DataFrame:
@@ -13,7 +23,9 @@ def get_sp500_tickers() -> pd.DataFrame:
     Tries Wikipedia first; falls back to a cached CSV snapshot.
     """
     try:
-        tables = pd.read_html(WIKIPEDIA_URL, attrs={"id": "constituents"})
+        response = requests.get(WIKIPEDIA_URL, headers=HEADERS, timeout=30)
+        response.raise_for_status()
+        tables = pd.read_html(io.StringIO(response.text), attrs={"id": "constituents"})
         df = tables[0]
         df = df.rename(columns={
             "Symbol": "ticker",
