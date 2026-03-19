@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S&amp;P 500 Decline Monitor</title>
+  <title>S&amp;P 500 &amp; NASDAQ-100 Decline Monitor</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -15,10 +15,7 @@
       padding: 24px 16px;
     }
 
-    h1 {
-      font-size: 1.6rem;
-      margin: 0 0 4px;
-    }
+    h1 { font-size: 1.6rem; margin: 0 0 4px; }
 
     .meta {
       color: #555;
@@ -26,29 +23,64 @@
       margin-bottom: 20px;
     }
 
+    /* ── Controls ── */
     .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
+      align-items: flex-end;
     }
 
-    .controls input, .controls select {
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .control-group label {
+      font-size: 0.75rem;
+      color: #666;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .controls input[type="text"],
+    .controls input[type="number"],
+    .controls select {
       padding: 8px 12px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 0.9rem;
       background: #fff;
+      height: 36px;
     }
 
-    .controls input { min-width: 220px; }
+    .controls input[type="text"]   { min-width: 200px; }
+    .controls input[type="number"] { width: 90px; }
 
+    .btn-reset {
+      padding: 8px 14px;
+      height: 36px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #444;
+      align-self: flex-end;
+    }
+    .btn-reset:hover { background: #f0f0f0; }
+
+    /* ── Summary bar ── */
     .summary-bar {
       font-size: 0.85rem;
       color: #444;
       margin-bottom: 8px;
     }
 
+    /* ── Table ── */
     .table-wrap {
       overflow-x: auto;
       border-radius: 8px;
@@ -71,21 +103,18 @@
       user-select: none;
       white-space: nowrap;
     }
-
     thead th:hover { background: #2d2d52; }
 
     tbody tr { border-bottom: 1px solid #eee; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: rgba(0,0,0,0.03) !important; }
 
-    tbody td {
-      padding: 9px 14px;
-      white-space: nowrap;
-    }
+    tbody td { padding: 9px 14px; white-space: nowrap; }
 
     /* Severity colour coding */
-    tr.severe   { background: #fff0f0; }
+    tr.severe      { background: #fff0f0; }
     tr.significant { background: #fff7ed; }
+    tr.moderate    { background: #fffbeb; }
 
     .badge {
       display: inline-block;
@@ -94,15 +123,26 @@
       font-size: 0.78rem;
       font-weight: 600;
     }
-
     .badge.severe      { background: #fee2e2; color: #b91c1c; }
     .badge.significant { background: #ffedd5; color: #c2410c; }
+    .badge.moderate    { background: #fef9c3; color: #854d0e; }
 
     .pct { font-weight: 700; }
     .pct.severe      { color: #b91c1c; }
     .pct.significant { color: #c2410c; }
+    .pct.moderate    { color: #854d0e; }
 
     .ticker { font-weight: 700; font-family: monospace; font-size: 0.92rem; }
+
+    .exch-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: #e0e7ff;
+      color: #3730a3;
+      font-weight: 600;
+    }
 
     .no-results {
       text-align: center;
@@ -111,38 +151,72 @@
       font-size: 1rem;
     }
 
-    @media (max-width: 600px) {
-      h1 { font-size: 1.2rem; }
-    }
+    @media (max-width: 600px) { h1 { font-size: 1.2rem; } }
   </style>
 </head>
 <body>
 
-<h1>S&amp;P 500 — Stocks Down {{ threshold | int }}%+ from All-Time High</h1>
+<h1>S&amp;P 500 &amp; NASDAQ-100 — Stocks Down from All-Time High</h1>
 <p class="meta">
   Generated: <strong>{{ generated_at }}</strong> &nbsp;|&nbsp;
-  Threshold: <strong>{{ threshold | int }}%</strong> &nbsp;|&nbsp;
-  Min market cap: <strong>${{ min_market_cap_b | int }}B</strong> &nbsp;|&nbsp;
-  Matches: <strong>{{ count }}</strong>
+  Universe: <strong>S&amp;P 500 + NASDAQ-100</strong> &nbsp;|&nbsp;
+  Showing stocks down ≥<strong id="metaThreshold">50</strong>% with mkt cap ≥$<strong id="metaCap">1</strong>B &nbsp;|&nbsp;
+  Matches: <strong id="metaCount">…</strong>
 </p>
 
+<!-- ── Filters ── -->
 <div class="controls">
-  <input type="text" id="filterInput" placeholder="Search ticker or company…" oninput="applyFilters()">
-  <select id="sectorFilter" onchange="applyFilters()">
-    <option value="">All Sectors</option>
-    {% for sector in sectors %}
-    <option value="{{ sector }}">{{ sector }}</option>
-    {% endfor %}
-  </select>
-  <select id="severityFilter" onchange="applyFilters()">
-    <option value="">All Severity</option>
-    <option value="severe">Severe (≥75%)</option>
-    <option value="significant">Significant (≥50%)</option>
-  </select>
+  <div class="control-group">
+    <label>Search</label>
+    <input type="text" id="filterInput" placeholder="Ticker or company…" oninput="applyFilters()">
+  </div>
+
+  <div class="control-group">
+    <label>Min % Decline</label>
+    <input type="number" id="thresholdFilter" value="50" min="0" max="99" step="5" oninput="applyFilters()">
+  </div>
+
+  <div class="control-group">
+    <label>Min Mkt Cap ($B)</label>
+    <input type="number" id="capFilter" value="1" min="0" step="1" oninput="applyFilters()">
+  </div>
+
+  <div class="control-group">
+    <label>Sector</label>
+    <select id="sectorFilter" onchange="applyFilters()">
+      <option value="">All Sectors</option>
+      {% for sector in sectors %}
+      <option value="{{ sector }}">{{ sector }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="control-group">
+    <label>Index</label>
+    <select id="exchangeFilter" onchange="applyFilters()">
+      <option value="">All Indexes</option>
+      {% for exch in exchanges %}
+      <option value="{{ exch }}">{{ exch }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="control-group">
+    <label>Severity</label>
+    <select id="severityFilter" onchange="applyFilters()">
+      <option value="">All</option>
+      <option value="severe">Severe (≥75%)</option>
+      <option value="significant">Significant (≥50%)</option>
+      <option value="moderate">Moderate (≥20%)</option>
+    </select>
+  </div>
+
+  <button class="btn-reset" onclick="resetFilters()">↺ Reset</button>
 </div>
 
 <p class="summary-bar" id="visibleCount">Showing {{ count }} stocks</p>
 
+<!-- ── Table ── -->
 <div class="table-wrap">
   <table id="stockTable">
     <thead>
@@ -150,11 +224,12 @@
         <th data-col="0" data-type="str">Ticker</th>
         <th data-col="1" data-type="str">Company</th>
         <th data-col="2" data-type="str">Sector</th>
-        <th data-col="3" data-type="num">Current Price</th>
-        <th data-col="4" data-type="num">ATH Price</th>
-        <th data-col="5" data-type="str">ATH Date</th>
-        <th data-col="6" data-type="num">% Decline ▼</th>
-        <th data-col="7" data-type="num">Mkt Cap ($B)</th>
+        <th data-col="3" data-type="str">Index</th>
+        <th data-col="4" data-type="num">Current Price</th>
+        <th data-col="5" data-type="num">ATH Price</th>
+        <th data-col="6" data-type="str">ATH Date</th>
+        <th data-col="7" data-type="num">% Decline ▼</th>
+        <th data-col="8" data-type="num">Mkt Cap ($B)</th>
       </tr>
     </thead>
     <tbody id="tableBody">
@@ -162,10 +237,14 @@
         {% for row in rows %}
         <tr class="{{ row.severity }}"
             data-sector="{{ row.sector }}"
-            data-severity="{{ row.severity }}">
+            data-exchange="{{ row.exchange }}"
+            data-severity="{{ row.severity }}"
+            data-decline="{{ row.pct_decline }}"
+            data-cap="{{ row.market_cap_b }}">
           <td><span class="ticker">{{ row.ticker }}</span></td>
           <td>{{ row.name }}</td>
           <td>{{ row.sector }}</td>
+          <td><span class="exch-tag">{{ row.exchange }}</span></td>
           <td>${{ "%.2f" | format(row.current_price) }}</td>
           <td>${{ "%.2f" | format(row.ath_price) }}</td>
           <td>{{ row.ath_date }}</td>
@@ -174,9 +253,9 @@
         </tr>
         {% endfor %}
       {% else %}
-        <tr>
-          <td colspan="8" class="no-results">
-            No stocks currently meet the criteria (down {{ threshold | int }}%+ from ATH with market cap ≥${{ min_market_cap_b | int }}B).
+        <tr id="noDataRow">
+          <td colspan="9" class="no-results">
+            No stocks meet the current criteria. Try lowering the % decline threshold.
           </td>
         </tr>
       {% endif %}
@@ -185,19 +264,15 @@
 </div>
 
 <script>
-  // --- Sorting ---
-  let sortCol = 6;        // default: % Decline column
-  let sortAsc = false;    // default: descending (worst first)
+  // ── Sorting ──
+  let sortCol = 7;      // default: % Decline
+  let sortAsc = false;  // descending (worst first)
 
   document.querySelectorAll('#stockTable thead th').forEach(th => {
     th.addEventListener('click', () => {
       const col = parseInt(th.dataset.col);
-      if (sortCol === col) {
-        sortAsc = !sortAsc;
-      } else {
-        sortCol = col;
-        sortAsc = th.dataset.type === 'str';  // strings default asc, numbers default desc
-      }
+      sortCol = col;
+      sortAsc = (col === sortCol) ? !sortAsc : (th.dataset.type === 'str');
       sortTable();
       updateHeaderArrows();
     });
@@ -224,7 +299,6 @@
 
   function updateHeaderArrows() {
     document.querySelectorAll('#stockTable thead th').forEach(th => {
-      // Strip any existing arrow
       th.textContent = th.textContent.replace(/ [▲▼]$/, '');
       if (parseInt(th.dataset.col) === sortCol) {
         th.textContent += sortAsc ? ' ▲' : ' ▼';
@@ -232,29 +306,59 @@
     });
   }
 
-  // --- Filtering ---
+  // ── Filtering ──
   function applyFilters() {
-    const text = document.getElementById('filterInput').value.toLowerCase();
-    const sector = document.getElementById('sectorFilter').value;
-    const severity = document.getElementById('severityFilter').value;
+    const text      = document.getElementById('filterInput').value.toLowerCase().trim();
+    const sector    = document.getElementById('sectorFilter').value;
+    const exchange  = document.getElementById('exchangeFilter').value;
+    const severity  = document.getElementById('severityFilter').value;
+    const minDecline = parseFloat(document.getElementById('thresholdFilter').value) || 0;
+    const minCap     = parseFloat(document.getElementById('capFilter').value) || 0;
+
+    // Update meta bar
+    document.getElementById('metaThreshold').textContent = minDecline;
+    document.getElementById('metaCap').textContent = minCap;
+
     let visible = 0;
 
     document.querySelectorAll('#tableBody tr[data-sector]').forEach(row => {
-      const matchText = !text ||
-        row.cells[0].textContent.toLowerCase().includes(text) ||
-        row.cells[1].textContent.toLowerCase().includes(text);
-      const matchSector = !sector || row.dataset.sector === sector;
-      const matchSeverity = !severity || row.dataset.severity === severity;
-      const show = matchText && matchSector && matchSeverity;
+      const decline = parseFloat(row.dataset.decline) || 0;
+      const cap     = parseFloat(row.dataset.cap)     || 0;
+
+      const matchText     = !text     || row.cells[0].textContent.toLowerCase().includes(text)
+                                      || row.cells[1].textContent.toLowerCase().includes(text);
+      const matchSector   = !sector   || row.dataset.sector   === sector;
+      const matchExchange = !exchange || row.dataset.exchange  === exchange;
+      const matchSeverity = !severity || row.dataset.severity  === severity;
+      const matchDecline  = decline >= minDecline;
+      const matchCap      = cap     >= minCap;
+
+      const show = matchText && matchSector && matchExchange && matchSeverity && matchDecline && matchCap;
       row.style.display = show ? '' : 'none';
       if (show) visible++;
     });
 
     document.getElementById('visibleCount').textContent = `Showing ${visible} stocks`;
+    document.getElementById('metaCount').textContent = visible;
+
+    // Show/hide the "no data" placeholder row
+    const noRow = document.getElementById('noDataRow');
+    if (noRow) noRow.style.display = visible === 0 ? '' : 'none';
   }
 
-  // Initialize arrows
+  function resetFilters() {
+    document.getElementById('filterInput').value   = '';
+    document.getElementById('thresholdFilter').value = '50';
+    document.getElementById('capFilter').value     = '1';
+    document.getElementById('sectorFilter').value  = '';
+    document.getElementById('exchangeFilter').value = '';
+    document.getElementById('severityFilter').value = '';
+    applyFilters();
+  }
+
+  // Initialise on load
   updateHeaderArrows();
+  applyFilters();
 </script>
 
 </body>

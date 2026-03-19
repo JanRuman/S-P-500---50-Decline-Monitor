@@ -1,20 +1,20 @@
-"""Orchestration entry point for the S&P 500 decline monitor."""
+"""Orchestration entry point for the S&P 500 + NASDAQ-100 decline monitor."""
 
 import os
 import sys
 
 import config
-from src.fetch_tickers import get_sp500_tickers
+from src.fetch_tickers import get_tickers
 from src.fetch_prices import fetch_all
 from src.analyze import build_results
 from src.render import render_report
 
 
 def main() -> None:
-    print("=== S&P 500 Decline Monitor ===")
+    print("=== S&P 500 + NASDAQ-100 Decline Monitor ===")
 
-    print("\n[1/4] Fetching S&P 500 ticker list...")
-    tickers_df = get_sp500_tickers()
+    print("\n[1/4] Fetching ticker lists (S&P 500 + NASDAQ-100)...")
+    tickers_df = get_tickers()
 
     print(f"\n[2/4] Fetching price data for {len(tickers_df)} tickers...")
     raw_data = fetch_all(tickers_df["ticker"].tolist())
@@ -44,5 +44,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    # Allow running as: python -m src.main  OR  python src/main.py
     sys.exit(main())
