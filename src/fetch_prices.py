@@ -26,6 +26,9 @@ def _load_cached(ticker: str) -> dict | None:
     try:
         with open(path, "rb") as f:
             data = pickle.load(f)
+        # Reject cache entries with no price data (from old failed runs)
+        if data.get("hist") is None or len(data.get("hist", [])) == 0:
+            return None
         age = datetime.now(timezone.utc) - data["fetched_at"]
         if age < timedelta(hours=config.CACHE_MAX_AGE_HOURS):
             return data
@@ -41,11 +44,7 @@ def _save_cached(ticker: str, data: dict) -> None:
 
 
 def _fetch_batch_history(tickers: list[str]) -> dict[str, object]:
-    """Download max-period close history for a batch of tickers.
-
-    Returns {ticker: pd.Series of Close prices}.
-    """
-    # yfinance.download with a list returns MultiIndex columns when >1 ticker
+    """Download max-period close history for a batch of tickers."""
     raw = yf.download(
         tickers,
         period="max",
@@ -55,10 +54,9 @@ def _fetch_batch_history(tickers: list[str]) -> dict[str, object]:
     )
     result = {}
     if len(tickers) == 1:
-        # Single-ticker result has flat columns
         close = raw.get("Close")
         if close is not None and not close.empty:
-            result[tickers[0]] = close
+            result[tickers[0]] = close.dropna()
     else:
         close_df = raw.get("Close")
         if close_df is not None:
@@ -70,23 +68,37 @@ def _fetch_batch_history(tickers: list[str]) -> dict[str, object]:
     return result
 
 
+def _get_market_cap(ticker: str) -> float | None:
+    """Safely fetch market cap, trying multiple yfinance attributes."""
+    try:
+        t = yf.Ticker(ticker)
+        # Try fast_info first (faster but can crash on bad timezone data)
+        try:
+            cap = t.fast_info.market_cap
+            if cap and cap > 0:
+                return float(cap)
+        except Exception:
+            pass
+        # Fall back to .info dict (slower but more robust)
+        info = t.info
+        cap = info.get("marketCap") or info.get("market_cap")
+        if cap and cap > 0:
+            return float(cap)
+    except Exception:
+        pass
+    return None
+
+
 def _fetch_market_caps(tickers: list[str]) -> dict[str, float | None]:
-    """Fetch market cap via fast_info for each ticker individually."""
+    """Fetch market cap for each ticker individually."""
     caps = {}
     for ticker in tickers:
-        try:
-            fi = yf.Ticker(ticker).fast_info
-            caps[ticker] = getattr(fi, "market_cap", None)
-        except Exception:
-            caps[ticker] = None
+        caps[ticker] = _get_market_cap(ticker)
     return caps
 
 
 def fetch_all(tickers: list[str]) -> dict[str, dict]:
-    """Return {ticker: {"hist": Series, "market_cap": float|None}} for all tickers.
-
-    Uses cache where fresh; fetches missing/stale tickers in batches.
-    """
+    """Return {ticker: {"hist": Series, "market_cap": float|None}} for all tickers."""
     result: dict[str, dict] = {}
     to_fetch: list[str] = []
 
@@ -103,13 +115,12 @@ def fetch_all(tickers: list[str]) -> dict[str, dict]:
 
     print(f"Fetching {len(to_fetch)} tickers in batches of {config.BATCH_SIZE}...")
     batches = [
-        to_fetch[i : i + config.BATCH_SIZE]
+        to_fetch[i: i + config.BATCH_SIZE]
         for i in range(0, len(to_fetch), config.BATCH_SIZE)
     ]
 
     for batch_num, batch in enumerate(batches, 1):
         print(f"  Batch {batch_num}/{len(batches)}: {len(batch)} tickers")
-        # Retry with exponential backoff
         for attempt in range(3):
             try:
                 histories = _fetch_batch_history(batch)
@@ -125,6 +136,9 @@ def fetch_all(tickers: list[str]) -> dict[str, dict]:
 
         market_caps = _fetch_market_caps(batch)
 
+        success = sum(1 for t in batch if histories.get(t) is not None)
+        print(f"    Price data: {success}/{len(batch)} tickers OK")
+
         now = datetime.now(timezone.utc)
         for ticker in batch:
             hist = histories.get(ticker)
@@ -139,5 +153,6 @@ def fetch_all(tickers: list[str]) -> dict[str, dict]:
         if batch_num < len(batches):
             time.sleep(config.BATCH_DELAY_SECONDS)
 
-    print(f"Done. {len(result)} tickers available ({len(to_fetch) - len([t for t in to_fetch if result.get(t, {}).get('hist') is None])} with data).")
+    with_data = sum(1 for t in to_fetch if result.get(t, {}).get("hist") is not None)
+    print(f"Done. {with_data}/{len(to_fetch)} fetched tickers have price history.")
     return result
