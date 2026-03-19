@@ -48,7 +48,7 @@ def _fetch_html(url: str) -> str:
 
 
 def _find_table(html: str, table_id: str | None = None) -> pd.DataFrame:
-    """Try to find table by id first, then by sniffing for ticker column."""
+    """Try to find table by id first, then by sniffing for ticker/symbol column."""
     if table_id:
         try:
             tables = pd.read_html(io.StringIO(html), attrs={"id": table_id})
@@ -58,7 +58,8 @@ def _find_table(html: str, table_id: str | None = None) -> pd.DataFrame:
     tables = pd.read_html(io.StringIO(html))
     for t in tables:
         cols_lower = [str(c).lower() for c in t.columns]
-        if any(k in cols_lower for k in ["ticker", "symbol"]):
+        # Use substring match so "ticker symbol", "stock symbol" etc. all match
+        if any("ticker" in c or "symbol" in c for c in cols_lower):
             return t
     raise RuntimeError("No suitable table found on page.")
 
@@ -68,9 +69,10 @@ def _normalise(df: pd.DataFrame, exchange: str) -> pd.DataFrame:
     col_map = {}
     for col in df.columns:
         cl = str(col).lower()
-        if cl in ("ticker", "symbol") and "ticker" not in col_map.values():
+        # Substring matches handle "Ticker symbol", "Stock symbol", "Company name" etc.
+        if ("ticker" in cl or "symbol" in cl) and "ticker" not in col_map.values():
             col_map[col] = "ticker"
-        elif cl in ("company", "security", "name") and "name" not in col_map.values():
+        elif ("company" in cl or "security" in cl or cl == "name") and "name" not in col_map.values():
             col_map[col] = "name"
         elif "sector" in cl and "sector" not in col_map.values():
             col_map[col] = "sector"
