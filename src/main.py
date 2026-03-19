@@ -36,7 +36,7 @@ def main() -> None:
         print(f"      Top 5 declines: {results_df[['ticker','pct_decline']].head().to_dict('records')}")
 
     print("\n[4/4] Generating HTML report...")
-    html = render_report(results_df)
+    html = render_report(results_df, tickers_df)
 
     os.makedirs(config.DOCS_DIR, exist_ok=True)
     out_path = os.path.join(config.DOCS_DIR, "index.html")

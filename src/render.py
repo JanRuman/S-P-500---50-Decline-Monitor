@@ -8,14 +8,19 @@ from jinja2 import Environment, FileSystemLoader
 import config
 
 
-def render_report(df: pd.DataFrame) -> str:
+def render_report(df: pd.DataFrame, all_tickers_df: pd.DataFrame | None = None) -> str:
     """Render and return the HTML report string."""
     env = Environment(loader=FileSystemLoader("."), autoescape=True)
     template = env.get_template(config.TEMPLATE_PATH)
 
     rows     = df.to_dict(orient="records") if not df.empty else []
     sectors  = sorted(df["sector"].unique().tolist())   if not df.empty else []
-    exchanges = sorted(df["exchange"].unique().tolist()) if not df.empty else []
+    # Build exchanges from the FULL ticker universe so all indexes always appear
+    # in the dropdown even if no stocks currently meet the decline threshold
+    if all_tickers_df is not None and not all_tickers_df.empty and "exchange" in all_tickers_df.columns:
+        exchanges = sorted(all_tickers_df["exchange"].unique().tolist())
+    else:
+        exchanges = sorted(df["exchange"].unique().tolist()) if not df.empty else []
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     return template.render(
